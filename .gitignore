@@ -1,0 +1,16 @@
+node_modules
+.next
+out
+build
+dist
+coverage
+.env
+.env.local
+.env*.local
+.baileys_auth
+.tracked_groups.json
+.listings_store.json
+*.tsbuildinfo
+next-env.d.ts
+.DS_Store
+openspec

@@ -238,7 +238,7 @@ export default function MapApp() {
           <div className="mx-auto max-w-sm rounded-2xl bg-white/95 p-5 text-center shadow-xl backdrop-blur">
             <p className="text-sm font-semibold text-slate-900">No listings match these filters</p>
             <p className="mt-1 text-xs text-slate-500">
-              Try widening your rent range or turning on “Include unspecified”.
+              Try widening your rent range or turning on &ldquo;Include unspecified&rdquo;.
             </p>
           </div>
         </div>

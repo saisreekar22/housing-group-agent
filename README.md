@@ -1,5 +1,7 @@
 # 🏠 CampusNest
 
+Link: https://housing-group-agent.vercel.app/
+
 **AI-powered student housing — built from your group chats.**
 
 > Stop scrolling. Start moving in.
@@ -68,7 +70,7 @@ Think: **Tinder meets Google Maps, but for student housing found inside your exi
 | Validation | [Zod](https://zod.dev/) |
 | Testing | [Vitest](https://vitest.dev/) |
 
-## Getting Started
+## Local Setup
 
 ```bash
 # Install dependencies

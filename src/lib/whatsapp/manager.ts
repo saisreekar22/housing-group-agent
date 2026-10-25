@@ -66,8 +66,11 @@ interface ManagerState {
 }
 
 const GLOBAL_KEY = "__housingGroupAgentWhatsAppManager__";
-const AUTH_DIR = path.join(process.cwd(), ".baileys_auth");
-const BUFFER_FILE = path.join(process.cwd(), ".whatsapp_group_messages.json");
+// On platforms like Railway/Render, point WHATSAPP_DATA_DIR at a mounted
+// persistent volume so the WhatsApp session survives container restarts.
+const DATA_DIR = process.env.WHATSAPP_DATA_DIR ?? process.cwd();
+const AUTH_DIR = path.join(DATA_DIR, ".baileys_auth");
+const BUFFER_FILE = path.join(DATA_DIR, ".whatsapp_group_messages.json");
 
 function initialState(): ManagerState {
   return {

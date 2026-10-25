@@ -30,14 +30,27 @@ function FlyToCenter({ center }: { center: MapCenter }) {
   return null;
 }
 
-function priceIcon(label: string, variant: "single" | "cluster"): L.DivIcon {
-  const html = `<span class="${variant === "single" ? "price-pill" : "cluster-pill"}">${label}</span>`;
+function pinIcon(
+  variant: "single" | "cluster",
+  selected: boolean,
+  count: number
+): L.DivIcon {
+  const fill = selected
+    ? "#059669"
+    : variant === "cluster"
+      ? "#059669"
+      : "#0f172a";
+  const label =
+    variant === "cluster" && count > 1
+      ? `<text x="14" y="18.5" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10.5" font-weight="800" fill="#ffffff">${count}</text>`
+      : `<circle cx="14" cy="14" r="4.5" fill="#ffffff" />`;
+  const html = `<svg width="30" height="42" viewBox="0 0 28 40" xmlns="http://www.w3.org/2000/svg" class="${selected ? "map-pin map-pin-selected" : "map-pin"}"><path d="M14 0C6.3 0 0 6.3 0 14c0 9.7 14 26 14 26s14-16.3 14-26C28 6.3 21.7 0 14 0z" fill="${fill}" stroke="#ffffff" stroke-width="2" stroke-linejoin="round" />${label}</svg>`;
   return L.divIcon({
     html,
     className: "housing-marker-icon",
-    iconSize: [variant === "single" ? 70 : 86, 34],
-    iconAnchor: [variant === "single" ? 35 : 43, 30],
-    popupAnchor: [0, -26],
+    iconSize: [30, 42],
+    iconAnchor: [15, 40],
+    popupAnchor: [0, -38],
   });
 }
 
@@ -90,13 +103,11 @@ export default function HousingMap({
       {clusters.map((cluster) => {
         if (cluster.listings.length === 1) {
           const listing = cluster.listings[0];
-          const label =
-            listing.rent_monthly !== null ? `$${listing.rent_monthly}` : "View";
           return (
             <Marker
               key={cluster.key}
               position={[cluster.latitude, cluster.longitude]}
-              icon={priceIcon(label, "single")}
+              icon={pinIcon("single", listing.id === selectedId, 1)}
               zIndexOffset={listing.id === selectedId ? 1000 : 0}
               eventHandlers={{ click: () => onSelect(listing) }}
             />
@@ -107,7 +118,7 @@ export default function HousingMap({
           <Marker
             key={cluster.key}
             position={[cluster.latitude, cluster.longitude]}
-            icon={priceIcon(`${cluster.listings.length} units`, "cluster")}
+            icon={pinIcon("cluster", cluster.listings.some((item) => item.id === selectedId), cluster.listings.length)}
             zIndexOffset={cluster.listings.some((item) => item.id === selectedId) ? 900 : 0}
           >
             <Popup>
